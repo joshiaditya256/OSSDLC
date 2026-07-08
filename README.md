@@ -689,33 +689,6 @@ Open browser → `http://localhost:8080`
 
 ---
 
-### Common Viva Questions – Docker
-
-**What is Docker?**
-A containerization platform used to package and run applications with all their dependencies.
-
-**Difference between Image and Container?**
-- Image: Read-only template.
-- Container: Running instance of an image.
-
-**Difference between Dockerfile and Image?**
-- Dockerfile: Instructions to build an image.
-- Image: Output created after building the Dockerfile.
-
-**What does `docker build` do?**
-Builds an image from a Dockerfile.
-
-**What does `docker run` do?**
-Creates and starts a new container.
-
-**What does `docker exec` do?**
-Runs a command inside an already running container.
-
-**What does `docker cp` do?**
-Copies files between the host system and a container.
-
-**What does `-p 8080:80` mean?**
-Maps host port 8080 to container port 80, allowing the web application to be accessed through the browser.
 
 ---
 
