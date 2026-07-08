@@ -1,15 +1,103 @@
 # CDAC Operating Systems Lab – Practical Notes
 
-Covers three parts: **Linux**, **Git**, **Docker**.
-Practiced on Ubuntu VM (VirtualBox). Git commands also work in Git Bash on Windows.
+Covers: **Pre-Exam VM Setup**, **Linux**, **Git**, **Docker**, **Shell Scripting**.
+Practiced on Ubuntu VM (VirtualBox). Git and basic Linux commands also work in Git Bash on Windows.
 
 ---
 
 ## Table of Contents
-1. [Linux Practical](#linux-practical)
-2. [Git Practical](#git-practical)
-3. [Docker Practical](#docker-practical)
-4. [Quick Reference – Most Important Commands](#quick-reference)
+1. [Pre-Exam VM Setup & Environment Check](#pre-exam-vm-setup--environment-check)
+2. [Linux Practical](#linux-practical)
+3. [Git Practical](#git-practical)
+4. [Docker Practical](#docker-practical)
+5. [Shell Scripting Practical](#shell-scripting-practical)
+6. [Common Exam Programs (Ready to Use)](#common-exam-programs-ready-to-use)
+7. [Quick Reference – Most Important Commands](#quick-reference)
+
+---
+
+## Pre-Exam VM Setup & Environment Check
+
+> Run this once when you get your exam VM (or the night before, on your practice VM) to make sure everything is ready.
+
+### Step 1: Check Internet
+```bash
+ping -c 4 google.com
+```
+If you see replies like `64 bytes from ...`, your internet is working.
+Press `Ctrl+C` to stop if it doesn't auto-stop after 4 pings.
+
+### Step 2: Update Packages
+```bash
+sudo apt update
+```
+- It will ask for your password.
+- Type your password — **nothing will appear while typing**, this is normal in Linux.
+- Press Enter, and wait until it finishes.
+
+### Step 3: Upgrade Packages (Recommended)
+```bash
+sudo apt upgrade -y
+```
+This may take a few minutes.
+
+### Step 4: Check Git
+```bash
+git --version
+```
+If it shows `git version 2.xx.x`, Git is already installed.
+Otherwise install it:
+```bash
+sudo apt install git -y
+git --version   # verify again
+```
+
+### Step 5: Check Docker
+```bash
+docker --version
+```
+If Docker is not installed:
+```bash
+sudo apt install docker.io -y
+```
+
+### Step 6: Start Docker
+```bash
+sudo systemctl start docker
+sudo systemctl enable docker   # auto-start on boot
+sudo systemctl status docker
+```
+You should see `Active: active (running)`. Press `Q` to exit the status screen.
+
+### Step 7: Verify Docker
+```bash
+docker --version
+```
+
+### Step 8: Allow Docker Without sudo (Optional)
+```bash
+sudo usermod -aG docker $USER
+```
+Then either log out and log back in, or restart the VM, for the group change to apply.
+
+### Step 9: Test Docker
+```bash
+docker run hello-world
+```
+If you get a permission error, use:
+```bash
+sudo docker run hello-world
+```
+If everything is working, you'll see the `Hello from Docker!` message.
+
+### Step 10: Verify Everything
+```bash
+git --version
+docker --version
+```
+If both show version numbers, you're ready for the CDAC practical.
+
+---
 
 ---
 
@@ -689,6 +777,33 @@ Open browser → `http://localhost:8080`
 
 ---
 
+### Common  Questions – Docker
+
+**What is Docker?**
+A containerization platform used to package and run applications with all their dependencies.
+
+**Difference between Image and Container?**
+- Image: Read-only template.
+- Container: Running instance of an image.
+
+**Difference between Dockerfile and Image?**
+- Dockerfile: Instructions to build an image.
+- Image: Output created after building the Dockerfile.
+
+**What does `docker build` do?**
+Builds an image from a Dockerfile.
+
+**What does `docker run` do?**
+Creates and starts a new container.
+
+**What does `docker exec` do?**
+Runs a command inside an already running container.
+
+**What does `docker cp` do?**
+Copies files between the host system and a container.
+
+**What does `-p 8080:80` mean?**
+Maps host port 8080 to container port 80, allowing the web application to be accessed through the browser.
 
 ---
 
