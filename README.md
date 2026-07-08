@@ -689,7 +689,525 @@ Open browser → `http://localhost:8080`
 
 ---
 
+### Common Viva Questions – Docker
 
+**What is Docker?**
+A containerization platform used to package and run applications with all their dependencies.
+
+**Difference between Image and Container?**
+- Image: Read-only template.
+- Container: Running instance of an image.
+
+**Difference between Dockerfile and Image?**
+- Dockerfile: Instructions to build an image.
+- Image: Output created after building the Dockerfile.
+
+**What does `docker build` do?**
+Builds an image from a Dockerfile.
+
+**What does `docker run` do?**
+Creates and starts a new container.
+
+**What does `docker exec` do?**
+Runs a command inside an already running container.
+
+**What does `docker cp` do?**
+Copies files between the host system and a container.
+
+**What does `-p 8080:80` mean?**
+Maps host port 8080 to container port 80, allowing the web application to be accessed through the browser.
+
+---
+
+## Shell Scripting Practical
+
+### 1. Create and Run a Script
+
+```bash
+nano myscript.sh
+```
+Every script starts with a **shebang** line:
+```bash
+#!/bin/bash
+echo "Hello CDAC"
+```
+Save (`Ctrl+O`, `Enter`, `Ctrl+X`), then give execute permission and run:
+```bash
+chmod +x myscript.sh
+./myscript.sh
+# or
+bash myscript.sh
+```
+
+---
+
+### 2. Variables
+
+```bash
+#!/bin/bash
+name="CDAC"
+course=PGDAC
+echo "Welcome to $name"
+echo "Course: ${course}"
+```
+> No spaces around `=`. Access value with `$variable` or `${variable}`.
+
+---
+
+### 3. Command Line Arguments
+
+```bash
+#!/bin/bash
+echo "Script name: $0"
+echo "First argument: $1"
+echo "Second argument: $2"
+echo "All arguments: $@"
+echo "Number of arguments: $#"
+```
+Run with:
+```bash
+./myscript.sh Linux Docker
+```
+
+---
+
+### 4. Read User Input
+
+```bash
+#!/bin/bash
+echo "Enter your name:"
+read name
+echo "Hello $name, Welcome!"
+
+# Read multiple values
+read -p "Enter two numbers: " a b
+echo "Sum = $((a + b))"
+```
+
+---
+
+### 5. Arithmetic Operations
+
+```bash
+#!/bin/bash
+a=10
+b=3
+echo "Add: $((a + b))"
+echo "Sub: $((a - b))"
+echo "Mul: $((a * b))"
+echo "Div: $((a / b))"
+echo "Mod: $((a % b))"
+
+# Alternative using expr
+sum=$(expr $a + $b)
+echo "Sum using expr: $sum"
+
+# Alternative using let
+let result=a+b
+echo "Result using let: $result"
+```
+
+---
+
+### 6. Conditional Statements
+
+**if / else**
+```bash
+#!/bin/bash
+read -p "Enter a number: " n
+if [ $n -gt 0 ]
+then
+    echo "Positive Number"
+else
+    echo "Negative Number"
+fi
+```
+
+**if / elif / else**
+```bash
+#!/bin/bash
+read -p "Enter a number: " n
+if [ $n -gt 0 ]
+then
+    echo "Positive"
+elif [ $n -lt 0 ]
+then
+    echo "Negative"
+else
+    echo "Zero"
+fi
+```
+
+**Common test operators**
+```
+-eq   equal to
+-ne   not equal to
+-gt   greater than
+-lt   less than
+-ge   greater than or equal to
+-le   less than or equal to
+-z    string is empty
+-n    string is not empty
+==    string equal (inside [[ ]])
+&&    AND
+||    OR
+```
+
+---
+
+### 7. Loops
+
+**for loop**
+```bash
+#!/bin/bash
+for i in 1 2 3 4 5
+do
+    echo "Number: $i"
+done
+
+# for loop using range
+for i in {1..5}
+do
+    echo "Value: $i"
+done
+
+# C-style for loop
+for ((i=1; i<=5; i++))
+do
+    echo "i = $i"
+done
+```
+
+**while loop**
+```bash
+#!/bin/bash
+i=1
+while [ $i -le 5 ]
+do
+    echo "i = $i"
+    i=$((i + 1))
+done
+```
+
+**until loop**
+```bash
+#!/bin/bash
+i=1
+until [ $i -gt 5 ]
+do
+    echo "i = $i"
+    i=$((i + 1))
+done
+```
+
+---
+
+### 8. Case Statement
+
+```bash
+#!/bin/bash
+read -p "Enter a choice (1-3): " choice
+case $choice in
+    1) echo "You selected Linux" ;;
+    2) echo "You selected Git" ;;
+    3) echo "You selected Docker" ;;
+    *) echo "Invalid choice" ;;
+esac
+```
+
+---
+
+### 9. Functions
+
+```bash
+#!/bin/bash
+greet() {
+    echo "Hello $1, welcome to CDAC"
+}
+
+add() {
+    result=$(($1 + $2))
+    echo "Sum = $result"
+}
+
+greet "Student"
+add 5 10
+```
+
+---
+
+### 10. Arrays
+
+```bash
+#!/bin/bash
+fruits=("Apple" "Banana" "Mango")
+echo "First: ${fruits[0]}"
+echo "All: ${fruits[@]}"
+echo "Count: ${#fruits[@]}"
+
+for fruit in "${fruits[@]}"
+do
+    echo "Fruit: $fruit"
+done
+```
+
+---
+
+### 11. String Operations
+
+```bash
+#!/bin/bash
+str="Hello CDAC"
+echo "Length: ${#str}"
+echo "Substring: ${str:0:5}"
+echo "Uppercase: ${str^^}"
+echo "Lowercase: ${str,,}"
+```
+
+---
+
+## Common Exam Programs (Ready to Use)
+
+### 1. Factorial of a Number
+```bash
+#!/bin/bash
+read -p "Enter a number: " n
+fact=1
+for ((i=1; i<=n; i++))
+do
+    fact=$((fact * i))
+done
+echo "Factorial of $n = $fact"
+```
+
+### 2. Fibonacci Series
+```bash
+#!/bin/bash
+read -p "Enter number of terms: " n
+a=0
+b=1
+echo "Fibonacci Series:"
+for ((i=1; i<=n; i++))
+do
+    echo -n "$a "
+    fn=$((a + b))
+    a=$b
+    b=$fn
+done
+echo
+```
+
+### 3. Check Prime Number
+```bash
+#!/bin/bash
+read -p "Enter a number: " n
+flag=0
+if [ $n -le 1 ]
+then
+    flag=1
+fi
+for ((i=2; i<=n/2; i++))
+do
+    if [ $((n % i)) -eq 0 ]
+    then
+        flag=1
+        break
+    fi
+done
+if [ $flag -eq 0 ]
+then
+    echo "$n is Prime"
+else
+    echo "$n is Not Prime"
+fi
+```
+
+### 4. Palindrome Check (Number)
+```bash
+#!/bin/bash
+read -p "Enter a number: " n
+orig=$n
+rev=0
+while [ $n -gt 0 ]
+do
+    digit=$((n % 10))
+    rev=$((rev * 10 + digit))
+    n=$((n / 10))
+done
+if [ $rev -eq $orig ]
+then
+    echo "Palindrome"
+else
+    echo "Not Palindrome"
+fi
+```
+
+### 5. Reverse a Number
+```bash
+#!/bin/bash
+read -p "Enter a number: " n
+rev=0
+while [ $n -gt 0 ]
+do
+    digit=$((n % 10))
+    rev=$((rev * 10 + digit))
+    n=$((n / 10))
+done
+echo "Reversed Number: $rev"
+```
+
+### 6. Sum of Digits
+```bash
+#!/bin/bash
+read -p "Enter a number: " n
+sum=0
+while [ $n -gt 0 ]
+do
+    digit=$((n % 10))
+    sum=$((sum + digit))
+    n=$((n / 10))
+done
+echo "Sum of digits: $sum"
+```
+
+### 7. Armstrong Number Check
+```bash
+#!/bin/bash
+read -p "Enter a number: " n
+orig=$n
+sum=0
+while [ $n -gt 0 ]
+do
+    digit=$((n % 10))
+    sum=$((sum + digit * digit * digit))
+    n=$((n / 10))
+done
+if [ $sum -eq $orig ]
+then
+    echo "Armstrong Number"
+else
+    echo "Not an Armstrong Number"
+fi
+```
+
+### 8. Swap Two Numbers
+```bash
+#!/bin/bash
+read -p "Enter first number: " a
+read -p "Enter second number: " b
+temp=$a
+a=$b
+b=$temp
+echo "After swap: a=$a, b=$b"
+```
+
+### 9. Biggest of Three Numbers
+```bash
+#!/bin/bash
+read -p "Enter three numbers: " a b c
+if [ $a -ge $b ] && [ $a -ge $c ]
+then
+    echo "$a is the biggest"
+elif [ $b -ge $a ] && [ $b -ge $c ]
+then
+    echo "$b is the biggest"
+else
+    echo "$c is the biggest"
+fi
+```
+
+### 10. Multiplication Table
+```bash
+#!/bin/bash
+read -p "Enter a number: " n
+for ((i=1; i<=10; i++))
+do
+    echo "$n x $i = $((n * i))"
+done
+```
+
+### 11. Even or Odd
+```bash
+#!/bin/bash
+read -p "Enter a number: " n
+if [ $((n % 2)) -eq 0 ]
+then
+    echo "Even Number"
+else
+    echo "Odd Number"
+fi
+```
+
+### 12. Sum of Natural Numbers (1 to N)
+```bash
+#!/bin/bash
+read -p "Enter N: " n
+sum=0
+for ((i=1; i<=n; i++))
+do
+    sum=$((sum + i))
+done
+echo "Sum = $sum"
+```
+
+### 13. Reverse a String
+```bash
+#!/bin/bash
+read -p "Enter a string: " str
+rev=$(echo "$str" | rev)
+echo "Reversed String: $rev"
+```
+
+### 14. Check String Palindrome
+```bash
+#!/bin/bash
+read -p "Enter a string: " str
+rev=$(echo "$str" | rev)
+if [ "$str" == "$rev" ]
+then
+    echo "Palindrome String"
+else
+    echo "Not a Palindrome String"
+fi
+```
+
+### 15. Count Vowels in a String
+```bash
+#!/bin/bash
+read -p "Enter a string: " str
+count=0
+for (( i=0; i<${#str}; i++ ))
+do
+    ch=${str:$i:1}
+    case $ch in
+        [aeiouAEIOU]) count=$((count + 1)) ;;
+    esac
+done
+echo "Number of vowels: $count"
+```
+
+---
+
+## Most Important Shell Scripting Commands / Concepts
+```
+#!/bin/bash
+chmod +x script.sh
+./script.sh
+read, read -p
+echo, echo -n
+$0 $1 $2 $@ $#
+$(( ))          arithmetic expansion
+expr, let
+if / elif / else / fi
+[ condition ]   or  [[ condition ]]
+for, while, until
+case ... esac
+function definition: name() { ... }
+arrays: arr=(a b c), ${arr[@]}, ${#arr[@]}
+string: ${#str}, ${str:0:n}, ${str^^}, ${str,,}
+```
+
+---
 
 ## Quick Reference
 
@@ -738,7 +1256,7 @@ docker image ls, docker container ls
 
 ---
 
-
+## Notes for Exam Day
 - ✅ All commands above run correctly on the Ubuntu exam VM.
 - ✅ Git commands can be practiced beforehand in **Git Bash** on Windows.
 - ⚠️ Docker, `sudo useradd/passwd/userdel`, and `systemctl` commands **cannot** be practiced in Git Bash — need the VM or Docker Desktop.
